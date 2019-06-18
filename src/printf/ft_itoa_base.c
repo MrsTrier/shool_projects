@@ -30,17 +30,28 @@ char			*ft_itoa_base(long long int n, int base, int uppercase)
 	char	*res;
 	long	len;
 	char	*barr;
+	int		i;
 
+	i = 0;
 	if (n == 0)
 		return (ft_strdup("0"));
 	barr = uppercase ? "0123456789ABCDEF" : "0123456789abcdef";
 	len = intlen(n, base);
 	res = ft_strnew(len);
+	i = len;
+	if (n <= -9223372036854775807)
+	{
+		n += 9000000000000000000;
+		res[0] = '9';
+		len--;
+	}
+	if  (n < 0)
+		n = -n;
 	if (!res)
 		return (NULL);
-	while (len)
+	while (len--)
 	{
-		res[--len] = barr[(n % base)];
+		res[--i] = barr[(n % base)];
 		n /= base;
 	}
 	return (res);

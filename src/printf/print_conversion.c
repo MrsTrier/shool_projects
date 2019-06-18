@@ -21,9 +21,9 @@ int		print_conversion(t_params formating, va_list *args, t_list **lst)
 //		return (c_conversions(formating, args, lst));
 //	else if (formating.conversion == '%')
 //		return (mod_conversion(formating));
-//	else if (formating.conversion == 'd')
-//		return (d_conversions(formating, args, lst));
-	if (formating.conversion == 's')
+	if (formating.conversion == 'd')
+		return (d_conversions(formating, args, lst));
+	else if (formating.conversion == 's')
 	 	(s_conversions(formating, args, lst));
 	else if (formating.conversion == 'x' || formating.conversion == 'X')
 		return (x_conversions(formating, args, lst));
@@ -31,8 +31,8 @@ int		print_conversion(t_params formating, va_list *args, t_list **lst)
 		return (o_conversions(formating, args, lst));
 	else if (formating.conversion == 'u')
 		return (u_conversions(formating, args, lst));
-//	else if (formating.conversion == 'p')
-//		return (p_conversions(formating, args, lst));
+	else if (formating.conversion == 'p')
+		return (p_conversions(formating, args, lst));
 //	else if (formating.conversion == 'f')
 //		return (f_conversions(formating, args, lst));
 }

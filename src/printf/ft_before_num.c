@@ -52,20 +52,21 @@ char	*ft_other_flags(t_params ft, int str_len, int hash, int spaces)
 	int		i;
 	char	space_char;
 	char	*str;
+	int		lengh;
 
 	i = 0;
 	space_char = (ft.flags & ZERO_FLAG) && !(ft.flags & MINUS_FLAG) ? '0' : ' ';
-	str = (char *)malloc(sizeof(char) * (spaces +
-			((ft.conversion == 'o') ? 0 : hash) + ((str_len > ft.precision) ?
-				str_len - ft.precision : ft.precision - str_len) + 1));
+	lengh = ((ft.conversion == 'o') ? 0 : hash) + ((str_len > ft.precision) ?
+				0 : ft.precision - str_len);
+	if (!(str = (char *)malloc(sizeof(char) * (((spaces > 0) ? spaces : 0) + lengh + 1))))
+		return (NULL);
 	(ft.conversion == 'o') ? place_hash('0', ft, &i, str)
 			: place_zero('0', ft, &i, str);
 	while (i < spaces)
 		str[i++] = space_char;
 	(ft.conversion == 'o') ? place_hash(' ', ft, &i, str)
 			: place_zero(' ', ft, &i, str);
-	while (i < spaces + ((ft.conversion == 'o') ? 0 : hash)
-			+ ft.precision - str_len)
+	while (i < spaces + lengh)
 		str[i++] = '0';
 	str[i] = '\0';
 	return (str);
@@ -94,39 +95,11 @@ int		ft_before_num(t_params ft, int str_len, int hash, t_list **lst)
 	}
 	else
 	{
-		str = ft_other_flags(ft, str_len, hash, spaces);
-		create_node(str, ft_strlen(str), lst);
+		if ((str = ft_other_flags(ft, str_len, hash, spaces)))
+			create_node(str, ft_strlen(str) + 1, lst);
 	}
 	return (i);
 }
-
-
-// // UUUU
-
-// 	space_char = (ft.flags & ZERO_FLAG) ? '0' : ' ';
-// 	spaces = ft.field_width - ((res > ft.precision) ? res : ft.precision);
-// 	spaces = (ft.flags & MINUS_FLAG) ? 0 : spaces;
-// 	if ((tmp = fill_with_chars(spaces, space_char)) == -1)
-// 		return (tmp);
-// 	out += tmp;
-// 	if ((tmp = fill_with_chars(ft.precision - res, '0')) == -1)
-// 		return (tmp);
-// 	out += tmp;
-
-
-// //SSSS
-
-// 	space_char = (ft.flags & ZERO_FLAG) && !(ft.flags & MINUS_FLAG) ? '0' : ' ';
-// 	str_len = ft_strlen(arg_val);
-// 	str_len = ft.precision != -1 && ft.precision < str_len ? ft.precision : str_len;
-// 	if (!(ft.flags & MINUS_FLAG))
-// 	{
-// 		if ((tmp = fill_with_chars(ft.field_width - str_len, space_char)) == -1)
-// 			return (tmp);
-// 		res += tmp;
-// 	}
-
-
 // // PPPP
 
 //     	res = 0;
@@ -140,3 +113,16 @@ int		ft_before_num(t_params ft, int str_len, int hash, t_list **lst)
 // 	}
 // 	if ((tmp = fill_with_chars(ft.precision - str_len, '0')) == -1)
 // 		return (tmp);
+
+
+// //SSSS
+
+// 	space_char = (ft.flags & ZERO_FLAG) && !(ft.flags & MINUS_FLAG) ? '0' : ' ';
+// 	str_len = ft_strlen(arg_val);
+// 	str_len = ft.precision != -1 && ft.precision < str_len ? ft.precision : str_len;
+// 	if (!(ft.flags & MINUS_FLAG))
+// 	{
+// 		if ((tmp = fill_with_chars(ft.field_width - str_len, space_char)) == -1)
+// 			return (tmp);
+// 		res += tmp;
+// 	}

@@ -19,6 +19,5 @@ int		ft_putnbr(long long int n);
 int		ft_putnbr_u(unsigned long long n);
 int		ft_numlgh(long long arg_val);
 int		ft_numlgh_long(unsigned long long arg_val);
-char	*ft_strjoin(char *s1, char *s2);
 void	ft_memdel(void **ap);
 #endif //FT_PRINTF_LIBFT_H

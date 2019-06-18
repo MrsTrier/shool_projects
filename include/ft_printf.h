@@ -31,15 +31,15 @@ typedef struct		s_params
 	char			conversion;
 }					t_params;
 
-
 int			get_field_width(const char **format, va_list *args);
 int			get_flags(const char **format);
 int			get_precision(const char **format, va_list *args);
-unsigned		get_conv_flags(const char **format);
+unsigned	get_conv_flags(const char **format);
 char		get_conversion(const char **format);
 int			ft_printf(const char *format, ...);
-int		print_conversion(t_params formating, va_list *args, t_list **lst);
-int     ft_before_num(t_params ft, int str_len, int hash, t_list **lst);
+int			print_conversion(t_params formating, va_list *args, t_list **lst);
+int			ft_before_num(t_params ft, int str_len, int hash, t_list **lst);
+int			ft_after_num(t_params ft, int str_len, t_list **lst, int hash);
 
 
 #endif //FT_PRINTF_FT_PRINTF_H

@@ -16,27 +16,6 @@
 #include "libft.h"
 #include "ft_string.h"
 
-int		ft_xconversions(t_params ft, int str_len, t_list **lst, int hash)
-{
-	int		res;
-	char 	*str;
-	int		i;
-	int		spaces;
-
-	res = 0;
-	i = 0;
-	spaces = ft.field_width - ((ft.precision > str_len) ? ft.precision : str_len) - hash;
-	if ((ft.flags & MINUS_FLAG) && (ft.field_width > ft.precision))
-	{
-		str = (char *)malloc(sizeof(char) * (spaces + 1));
-		while (i < spaces)
-			str[i++] = ' ';
-		str[i] = '\0';
-		create_node(str, spaces + 1, lst);
-	}
-	return (res);
-}
-
 int		x_conversions(t_params ft, va_list *args, t_list **lst)
 {
 	long long	arg_val;
@@ -56,7 +35,7 @@ int		x_conversions(t_params ft, va_list *args, t_list **lst)
 								ft.flags &= ~ZERO_FLAG : ft.flags;
 	ft_before_num(ft, str_len, (ft.flags & HASH_FLAG) ? 2 : 0, lst);
 	create_node(num, str_len + 1, lst);
-	if ((tmp = ft_xconversions(ft, str_len, lst, (ft.flags & HASH_FLAG) ? 2 : 0)) == -1)
+	if ((tmp = ft_after_num(ft, str_len, lst, (ft.flags & HASH_FLAG) ? 2 : 0)) == -1)
 		return (tmp);
 	tmp += str_len;
 	return (tmp);

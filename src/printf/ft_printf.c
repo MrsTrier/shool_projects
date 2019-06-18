@@ -75,7 +75,8 @@ int	ft_printf(const char *format, ...)
 	main_loop(format, &args, res_lst);
 	tmp_str = ft_lst_to_str(res_lst);
 	res = write(1, tmp_str, ft_strlen(tmp_str));
-	free_lst(res_lst);
+	if (res_lst->content)
+		free_lst(res_lst);
 	free(tmp_str);
 	va_end(args);
 	return (res);

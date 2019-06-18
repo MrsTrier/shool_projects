@@ -20,5 +20,5 @@ int		create_node(void *str, size_t len, t_list **lst)
 		return (-1);
 	(*lst)->next = tmp_lst;
 	*lst = tmp_lst;
-	return (0);
+	return (1);
 }
