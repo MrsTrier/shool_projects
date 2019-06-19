@@ -47,8 +47,9 @@ int		o_conversions(t_params ft, va_list *args, t_list **lst)
 	str_len = ((arg_val == 0) && (ft.precision == 0)) ? 0 : ft_strlen(num);
 	((ft.flags & ZERO_FLAG) && (ft.precision != -1)) ?
 								ft.flags &= ~ZERO_FLAG : ft.flags;
+	ft.field_width = ft.precision > ft.field_width ? ft.precision : ft.field_width;
 	tmp = ft_before_num(ft, str_len, (ft.flags & HASH_FLAG) ? 1 : 0, lst);
-	(arg_val == 0 && ft.precision <= 0) ? 0 : create_node(num, str_len + 1, lst);
+	(arg_val == 0 && ft.precision == 0) ? 0 : create_node(num, str_len + 1, lst);
 	ft_oconversions(ft, str_len, lst, &tmp);
 	tmp += str_len;
 	return (tmp);

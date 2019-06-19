@@ -28,6 +28,7 @@ int		place_hash(char c, t_params ft, int *i, char *str)
 			*i += 1;
 		}
 	}
+	return (0);
 }
 
 void	place_zero(char c, t_params ft, int *i, char *str)
@@ -82,7 +83,7 @@ int		ft_before_num(t_params ft, int str_len, int hash, t_list **lst)
 	i = 0;
 	space_char = (ft.flags & ZERO_FLAG) && !(ft.flags & MINUS_FLAG) ? '0' : ' ';
 	spaces = ft.field_width - ((str_len > ft.precision) ?
-				str_len : ft.precision) - ((ft.conversion == 'o') ? 0 : hash);
+				str_len : ft.precision) - hash;
 	spaces = (ft.flags & MINUS_FLAG) ? 0 : spaces;
 	if (ft.conversion == 's' && ft.conversion == 'c')
 	{
@@ -100,19 +101,6 @@ int		ft_before_num(t_params ft, int str_len, int hash, t_list **lst)
 	}
 	return (i);
 }
-// // PPPP
-
-//     	res = 0;
-// 	tmp = 0;
-// 	if (!(ft.flags & MINUS_FLAG))
-// 	{
-// 		if ((tmp = fill_with_chars(ft.field_width - (ft.precision > str_len ?
-// 			ft.precision : str_len), (ft.flags & ZERO_FLAG) ? '0' : ' ')) == -1)
-// 			return (tmp);
-// 		res += tmp;
-// 	}
-// 	if ((tmp = fill_with_chars(ft.precision - str_len, '0')) == -1)
-// 		return (tmp);
 
 
 // //SSSS

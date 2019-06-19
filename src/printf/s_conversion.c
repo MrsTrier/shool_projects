@@ -16,17 +16,18 @@
 int	create_node(void *str, size_t len, t_list **lst);
 
 
-void	s_conversions(t_params ft, va_list *args, t_list **lst)
+int		s_conversions(t_params ft, va_list *args, t_list **lst)
 {
 	char	*arg_val;
 	char	*res;
-	size_t	str_len;
+	int		str_len;
 
 	if (!(arg_val = va_arg(*args, char *)))
 		arg_val = "(null)";
 	str_len = ft_strlen(arg_val);
-	str_len = ft.precision != -1 && ft.precision < str_len ? ft.precision : str_len;
+	str_len = (ft.precision != -1 && ft.precision < str_len) ? ft.precision : str_len;
 	if (!(res = ft_strsub(arg_val, 0, str_len)))
-		return ;
+		return (-1);
 	create_node(res, str_len + 1, lst);
+	return (0);
 }

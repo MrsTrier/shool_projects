@@ -36,7 +36,7 @@ int		before_num(t_params ft, int str_len, long long arg_val, t_list **lst)
 		while (i < spaces)
 			str[i++] = space_char;
 		str[i] = '\0';
-		if ((tmp = create_node(str, spaces, lst)) == -1)
+		if ((tmp = create_node(str, spaces + 1, lst)) == -1)
 			return (tmp);
 		i--;
 	}
@@ -93,12 +93,14 @@ int		d_conversions(t_params ft, va_list *args, t_list **lst)
 	char				*num;
 
 	res = 0;
+	str_len = 0;
 	arg_val = convert_flags(ft.flags, args);
-	num = ((arg_val == 0) && (ft.precision == 0)) ? 0 :
-				ft_itoa_base(arg_val, 10, 0);
+	if ((arg_val != 0) && (ft.precision != 0))
+		num = ft_itoa_base(arg_val, 10, 0);
 	((ft.flags & ZERO_FLAG) && (ft.precision != -1)) ?
 				ft.flags &= ~ZERO_FLAG : ft.flags;
-	str_len = ft_strlen(num);
+	if ((arg_val != 0) && (ft.precision != 0))
+		str_len = ft_strlen(num);
 	if ((tmp = ft_print_sign(ft.flags, arg_val, lst) == -1))
 		return (tmp);
 	res += tmp;

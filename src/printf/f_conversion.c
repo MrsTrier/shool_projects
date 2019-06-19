@@ -15,32 +15,45 @@
 
 char	*get_float(t_params params, va_list *args);
 
-void	f_conversions(t_params ft, va_list *args, t_list **lst)
+int		f_conversions(t_params ft, va_list *args, t_list **lst)
 {
 	char	*arg_val;
-	int		res;
+	int		spaces;
 	int		tmp;
 	char	space_char;
 	long	str_len;
+	char	*str;
 
-	res = 0;
+	tmp = 0;
 	arg_val = get_float(ft, args);
-	space_char = (ft.flags & ZERO_FLAG) && !(ft.flags & MINUS_FLAG) ? '0' : ' ';
 	str_len = ft_strlen(arg_val);
-	if (!(ft.flags & MINUS_FLAG))
+	space_char = (ft.flags & ZERO_FLAG) && !(ft.flags & MINUS_FLAG) ? '0' : ' ';
+	spaces = ft.field_width - ((str_len > ft.precision) ? str_len : ft.precision);
+	spaces = (ft.flags & MINUS_FLAG) ? 0 : spaces;
+	if (!(str = (char *)malloc(sizeof(char) * spaces + 1)))
+		free(str);
+	else
 	{
-//		if ((tmp = fill_with_chars(ft.field_width - str_len, space_char)) == -1)
-//			return (tmp);
-		res += tmp;
+		str[spaces + 1] = '\0';
+		while (spaces >= 0)
+			str[spaces--] = space_char;
+		if ((tmp = create_node(str, ft_strlen(str), lst)) == -1)
+			return (tmp);
 	}
-//	if ((tmp = write(1, arg_val, str_len)) == -1)
-//		return (tmp);
-	res += tmp;
+	create_node(arg_val, str_len, lst);
 	if (ft.flags & MINUS_FLAG)
 	{
-//		if ((tmp = fill_with_chars(ft.field_width - str_len, space_char)) == -1)
-//			return (tmp);
-		res += tmp;
+		spaces = ft.field_width - ((str_len > ft.precision) ? str_len : ft.precision);
+		if (!(str = (char *)malloc(sizeof(char) * spaces + 1)))
+			free(str);
+		else
+		{
+			str[spaces + 1] = '\0';
+			while (spaces >= 0)
+				str[spaces--] = space_char;
+			if ((tmp = create_node(str, ft_strlen(str), lst)) == -1)
+				return (tmp);
+		}
 	}
-//	return (res);
+	return (tmp);
 }
